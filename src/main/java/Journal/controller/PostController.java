@@ -7,6 +7,8 @@ import Journal.DTO.PostDto;
 import Journal.service.PostService;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/posts")
 public class PostController {
 
-    PostService postService;
+    private final PostService postService;
 
     @PostMapping("newPost")
     public ResponseEntity<PostDto>newPost(@RequestBody PostDto postDto) {
@@ -34,11 +36,10 @@ public class PostController {
          
      }
 
-
-    
-   
-
-
-    
-    
+     @GetMapping("/all")
+     public ResponseEntity<List<PostDto>> getAllPosts() {
+        List<PostDto> posts = postService.getAllPosts();
+        return ResponseEntity.ok(posts);
+     }
+ 
 }
