@@ -31,21 +31,21 @@ public class AuthFilter extends OncePerRequestFilter {
         final String jwt;
         final String username;
 
-        // Om inget Authorization-header, hoppa vidare
+        
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        jwt = authHeader.substring(7); // ta bort "Bearer "
+        jwt = authHeader.substring(7); 
         username = jwtService.extractUsername(jwt);
 
-        // Om användare finns men SecurityContext är tom
+        
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             if (jwtService.isTokenValid(jwt, userDetails)) {
-                // Sätt authentication i SecurityContext
+                
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,

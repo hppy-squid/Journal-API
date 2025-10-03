@@ -22,16 +22,14 @@ public class PostService {
     private final UserRepository userRepository;
 
     public PostDto newPost(PostDto postDto, Authentication authentication) {
-        // 1. Konvertera DTO → Entity
+        
         Post post = new Post();
         post.setContent(postDto.getContent());
 
-        // Konvertera String → Enum (förutsatt att status i DTO är t.ex. "HAPPY", "SAD", "NEUTRAL")
         if (postDto.getStatus() != null) {
             post.setStatus(MoodStatus.valueOf(postDto.getStatus().toUpperCase()));
         }
 
-        // Sätt datum, om inget skickas in → dagens datum
         post.setDate(postDto.getDate() != null ? postDto.getDate() : LocalDateTime.now());
 
          String username = authentication.getName();
@@ -40,14 +38,12 @@ public class PostService {
 
     post.setUser(user);
 
-        // 2. Spara i DB
         Post savedPost = postRepository.save(post);
 
-        // 3. Konvertera Entity → DTO
         PostDto responseDto = new PostDto();
         responseDto.setId(savedPost.getId());
         responseDto.setContent(savedPost.getContent());
-        responseDto.setStatus(savedPost.getStatus().name()); // enum → String
+        responseDto.setStatus(savedPost.getStatus().name());
         responseDto.setDate(savedPost.getDate());
 
         return responseDto;
@@ -63,7 +59,7 @@ public class PostService {
     PostDto dto = new PostDto();
     dto.setId(post.getId());
     dto.setContent(post.getContent());
-    dto.setStatus(post.getStatus().name()); // enum → String
+    dto.setStatus(post.getStatus().name()); 
     dto.setDate(post.getDate());
 
     return dto;
@@ -74,7 +70,7 @@ public class PostService {
 
 
     public List<PostDto> getAllPosts(Authentication authentication) {
-        String username = authentication.getName(); // hämtas från JWT
+        String username = authentication.getName(); 
     User user = userRepository.findByUsername(username)
         .orElseThrow(() -> new RuntimeException("User not found"));
     
@@ -86,7 +82,7 @@ public class PostService {
                 PostDto dto = new PostDto();
                 dto.setId(post.getId());
                 dto.setContent(post.getContent());
-                dto.setStatus(post.getStatus().name()); // enum → String
+                dto.setStatus(post.getStatus().name());
                 dto.setDate(post.getDate());
                 return dto;
             })

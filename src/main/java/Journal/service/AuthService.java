@@ -33,7 +33,7 @@ public class AuthService {
 
 
 
-        // hämta användaren från DB
+       
         User user = userRepository.findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
