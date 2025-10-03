@@ -1,6 +1,7 @@
 package Journal.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,10 @@ public class StatisticsService {
     private final PostRepository postRepository;
 
     public StatisticsDto getStatistics(LocalDate startDate, LocalDate endDate) {
-       List<Post> posts = postRepository.findByDateBetween(startDate, endDate);
+            LocalDateTime startDateTime = startDate.atStartOfDay();
+    LocalDateTime endDateTime = endDate.atTime(23, 59, 59);
+
+       List<Post> posts = postRepository.findByDateBetween(startDateTime, endDateTime);
 
     long total = posts.size();
     Map<String, Double> percentages = new HashMap<>();
