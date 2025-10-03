@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +25,8 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("newPost")
-    public ResponseEntity<PostDto>newPost(@RequestBody PostDto postDto) {
-        PostDto newPost = postService.newPost(postDto);
+    public ResponseEntity<PostDto>newPost(@RequestBody PostDto postDto, Authentication authentication) {
+        PostDto newPost = postService.newPost(postDto, authentication);
         return ResponseEntity.ok(newPost);
     }
 
@@ -37,8 +38,8 @@ public class PostController {
      }
 
      @GetMapping("/all")
-     public ResponseEntity<List<PostDto>> getAllPosts() {
-        List<PostDto> posts = postService.getAllPosts();
+     public ResponseEntity<List<PostDto>> getAllPosts(Authentication authentication) {
+        List<PostDto> posts = postService.getAllPosts(authentication);
         return ResponseEntity.ok(posts);
      }
  

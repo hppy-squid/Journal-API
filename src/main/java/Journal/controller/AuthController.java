@@ -30,10 +30,5 @@ public class AuthController {
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest) {
         return ResponseEntity.ok(authService.register(registerRequest));
     }
-
-    //  @PostMapping("/logout/${id}")
-    // public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest) {
-    //     return ResponseEntity.ok(authService.register(registerRequest));
-    // }
     
 }

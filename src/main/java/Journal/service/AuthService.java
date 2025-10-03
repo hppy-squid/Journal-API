@@ -11,7 +11,6 @@ import Journal.DTO.LoginRequest;
 import Journal.DTO.RegisterRequest;
 import Journal.model.User;
 import Journal.repositories.UserRepository;
-import Journal.security.AuthFilter;
 import lombok.RequiredArgsConstructor;
 
 @Service
